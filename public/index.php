@@ -18,7 +18,10 @@
     <link rel="stylesheet" href="./src/style.css">
 </head>
 <body class="bg-gray-100 font-sans">
-    <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
+    <header>
+
+    </header>
+    <main class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
         <h1 class="text-2xl font-bold text-center mb-4">
             <?php
                 echo $monthName . ' ' . $year;
@@ -78,18 +81,7 @@
                     echo "<div class=\"$class\">$day</div>";
                 }
             ?>
-    </div>
-</body>
-<!-- <body>
-    <header>
-        <div class="left"></div>
-    </header>
-    <main>
-
     </main>
-    <footer>
-        
-    </footer>
-    <script src="./src/script/index.js"></script>
-</body> -->
+</body>
+
 </html>
