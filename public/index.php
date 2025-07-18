@@ -29,7 +29,7 @@
     <main class="flex flex-row">
         <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
             <h1 class="text-2xl font-bold text-center mb-4">
-                <?php echo $monthName . ' ' . $year; ?>
+                <?= $monthName . ' ' . $year; ?>
             </h1>
             <div class="grid grid-cols-7 gap-2 text-center font-medium text-gray-700">
                 <div>Mon</div>
@@ -102,10 +102,9 @@
                         echo '<li>Event 2: ' . date('Y-m-d', strtotime('+2 weeks')) . '</li>';
                         echo '</ul>';
                     } else {
-                        $balls = false; // No events scheduled
+                        echo '<p class="text-gray-600">No events scheduled for this month.</p>';
                     }
                 ?>
-                <p class="text-gray-600">No events scheduled for this month.</p>
             </div>
         </div>
     </main>
