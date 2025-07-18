@@ -41,7 +41,7 @@
     //   User Information
     // ====================
     /*
-     * Stores a user. Generating a randomly generating ID, assosiating the account
+     * Stores a user. Generating a randomly generating ID, associated the account
      * @param string $username Account Holder Username
      * @param string $email Account Holder Email
      * @param string $password Account Holder Password
@@ -70,18 +70,8 @@
 
     /*
      * Obtains all users
-     * @param string $username Account Username
      */
     function obtainAllUsers() {
-
-    }
-
-    // ------------------------------------------------------------------------
-
-    // ===================
-    //  Login Information
-    // ===================
-    function registerUser() {
 
     }
 
@@ -106,12 +96,27 @@
      */
     function obtainEventByDate($eventDate) {
 
-    }    
+    }
     
+    /*
+     * Obtains an event by their ID
+     * @param int $eventId Event ID
+     */
+    function obtainEventByID($eventId) {
+
+    }
+    
+    /*
+     * Obtains an event by their creator
+     * @param unknown $eventCreator Event Creators Username or ID
+     */
     function obtainEventByCreator($eventCreator) {
 
     }
 
+    /*
+     * Obtains all events 
+     */
     function obtainAllEvents() {
 
     }
