@@ -1,4 +1,6 @@
 <?php
+    require_once '_database/connect.php';
+
     $year = date('Y');
     $month = date('n');
     $monthName = date('F');
@@ -18,70 +20,94 @@
     <link rel="stylesheet" href="./src/style.css">
 </head>
 <body class="bg-gray-100 font-sans">
-    <header>
+    <header class="bg-white shadow-md py-4">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="./src/img/logo.png" alt="Logo" class="h-12">
+        </div>
 
     </header>
-    <main class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
-        <h1 class="text-2xl font-bold text-center mb-4">
-            <?php
-                echo $monthName . ' ' . $year;
-            ?>
-        </h1>
-        <div class="grid grid-cols-7 gap-2 text-center font-medium text-gray-700">
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div class="text-red-600">Sat</div>
-            <div class="text-red-600">Sun</div>
-        </div>
-        <div class="grid grid-cols-7 gap-2 text-center mt-2">
-            <?php
-                $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+    <main class="flex flex-row">
+        <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
+            <h1 class="text-2xl font-bold text-center mb-4">
+                <?php echo $monthName . ' ' . $year; ?>
+            </h1>
+            <div class="grid grid-cols-7 gap-2 text-center font-medium text-gray-700">
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div class="text-red-600">Sat</div>
+                <div class="text-red-600">Sun</div>
+            </div>
+            <div class="grid grid-cols-7 gap-2 text-center mt-2">
+                <?php
+                    $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
-                // Day's map, that uses the weekday as a key. Used for padding.
-                $dayMap = [
-                    'Monday' => 0,
-                    'Tuesday' => 1,
-                    'Wednesday' => 2,
-                    'Thursday' => 3,
-                    'Friday' => 4,
-                    'Saturday' => 5,
-                    'Sunday' => 6
-                ];
+                    // Day's map, that uses the weekday as a key. Used for padding.
+                    $dayMap = [
+                        'Monday' => 0,
+                        'Tuesday' => 1,
+                        'Wednesday' => 2,
+                        'Thursday' => 3,
+                        'Friday' => 4,
+                        'Saturday' => 5,
+                        'Sunday' => 6
+                    ];
 
-                $alreadyRun = false;
+                    $alreadyRun = false;
 
-                for ($day = 1; $day <= $daysInMonth; $day++) {
-                    $dateStr = sprintf('%04d-%02d-%02d', $year, $month, $day);
-                    $weekday = date('l', strtotime($dateStr));
+                    for ($day = 1; $day <= $daysInMonth; $day++) {
+                        $dateStr = sprintf('%04d-%02d-%02d', $year, $month, $day);
+                        $weekday = date('l', strtotime($dateStr));
 
-                    // Runs only ONCE! This adds padding (div), before the first day of the month
-                    if (!$alreadyRun && isset($dayMap[$weekday])) {
-                        for ($i = 0; $i < $dayMap[$weekday]; $i++) {
-                            echo "<div></div>";
+                        // Runs only ONCE! This adds padding (div), before the first day of the month
+                        if (!$alreadyRun && isset($dayMap[$weekday])) {
+                            for ($i = 0; $i < $dayMap[$weekday]; $i++) {
+                                echo "<div></div>";
+                            }
+                            $alreadyRun = true;
                         }
-                        $alreadyRun = true;
-                    }
 
-                    // Output with styling
-                    if ($weekday === 'Saturday' || $weekday === 'Sunday') {
-                        // Format Weekend Days
-                        $class = "text-red-600";
-                    } elseif ($day == $todaysDay) {
-                        // Format Today's Day
-                        $class = "bg-blue-600 text-white rounded-full";
+                        // Output with styling
+                        if ($weekday === 'Saturday' || $weekday === 'Sunday') {
+                            // Format Weekend Days
+                            $class = "text-red-600";
+                        } elseif ($day == $todaysDay) {
+                            // Format Today's Day
+                            $class = "bg-blue-600 text-white rounded-full";
+                        } else {
+                            // Default style
+                            $class = "";
+                        }
+
+                        // Output the day
+                        echo "<div class=\"$class\">$day</div>";
+                    }
+                ?>
+            </div>
+        </div>
+        <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
+            <h1 class="text-2xl font-bold text-center mb-4">
+                Upcoming Events
+            </h1>
+            <div>
+                <?php 
+                    $balls = true;
+                
+                    if ($balls) {
+                        // Example of how to display events
+                        echo '<ul class="list-disc pl-5">';
+                        echo '<li>Event 1: ' . date('Y-m-d', strtotime('+1 week')) . '</li>';
+                        echo '<li>Event 2: ' . date('Y-m-d', strtotime('+2 weeks')) . '</li>';
+                        echo '</ul>';
                     } else {
-                        // Default style
-                        $class = "";
+                        $balls = false; // No events scheduled
                     }
-
-                    // Output the day
-                    echo "<div class=\"$class\">$day</div>";
-                }
-            ?>
+                ?>
+                <p class="text-gray-600">No events scheduled for this month.</p>
+            </div>
+        </div>
     </main>
 </body>
-
 </html>
