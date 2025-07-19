@@ -131,7 +131,7 @@
 
     <!-- Footer -->
     <footer class="bg-white p-4 text-center">
-        <p class="text-gray-600">© <?= date('Y'); ?> All rights reserved.</p>
+        <p class="text-gray-600">© <?= $year; ?> All rights reserved.</p>
         <p class="text-gray-600">Proudly made by Smil</p>
     </footer>
 </body>
