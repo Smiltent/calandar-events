@@ -22,9 +22,8 @@
 <body class="bg-gray-100 font-sans">
     <header class="bg-white shadow-md py-4">
         <div class="max-w-7xl mx-auto px-4">
-            <img src="./src/img/logo.png" alt="Logo" class="h-12">
+            <h1 class="text-3xl font-bold">Calendar</h1>
         </div>
-
     </header>
     <main class="flex flex-row">
         <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
@@ -70,15 +69,18 @@
                         }
 
                         // Output with styling
-                        if ($weekday === 'Saturday' || $weekday === 'Sunday') {
-                            // Format Weekend Days
-                            $class = "text-red-600";
-                        } elseif ($day == $todaysDay) {
-                            // Format Today's Day
-                            $class = "bg-blue-600 text-white rounded-full";
-                        } else {
-                            // Default style
-                            $class = "";
+                        $class = "";
+
+                        $isWeekend = ($weekday === 'Saturday' || $weekday === 'Sunday');
+                        $isTodayToday = ($day == $todaysDay);
+
+                        if ($isWeekend) {
+                            $class .= "text-red-700 ";
+                        }
+
+                        if ($isTodayToday) {
+                            $class .= $isWeekend ? "bg-red-400" : "bg-blue-400 text-white";
+                            $class .= " rounded-full";
                         }
 
                         // Output the day
@@ -93,10 +95,9 @@
             </h1>
             <div>
                 <?php 
-                    $balls = true;
+                    $balls = false;
                 
                     if ($balls) {
-                        // Example of how to display events
                         echo '<ul class="list-disc pl-5">';
                         echo '<li>Event 1: ' . date('Y-m-d', strtotime('+1 week')) . '</li>';
                         echo '<li>Event 2: ' . date('Y-m-d', strtotime('+2 weeks')) . '</li>';

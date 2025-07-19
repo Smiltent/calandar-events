@@ -1,38 +1,17 @@
 <?php
-    // ====================
-    //   Role Information
-    // ====================
-    $mysqli = new mysqli(
-        getenv('MYSQL_HOST'),
-        getenv('MYSQL_USER'),
-        getenv('MYSQL_PASSWORD')
-    );
+    // ============
+    //   Database
+    // ============
+    $host = getenv('MYSQL_HOST');
+    $dbname = getenv('MYSQL_DATABASE');
+    $user = getenv('MYSQL_USER');
+    $pass = getenv('MYSQL_PASSWORD');
 
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
-
-    // ------------------------------------------------------------------------
-
-    // ====================
-    //   Role Information
-    // ====================
-    /*
-     * Stores a role
-     * @param string $roleName Role name
-     * @param string $roleDescription Role Description
-     * @param int[] $rolePermissionBits Role Permission Bits in an Array
-     */
-    function storeRole($roleName, $roleDescription, $rolePermissionBits) {
-
-    }
-
-    /*
-     * Obtains a role by their name
-     * @param string $roleName Role name
-     */
-    function obtainRoleByName($roleName) {
-
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e) {
+        die("Database connection failed: " . $e->getMessage());
     }
 
     // ------------------------------------------------------------------------
@@ -46,33 +25,54 @@
      * @param string $email Account Holder Email
      * @param string $password Account Holder Password
      * @param string[] $role Account Holder Roles in an Array
+     * @return int Returns the user ID
      */
     function storeUser($username, $email, $password, $role) {
-        // Stores the users username, email and roles in plain.
-        // The password gets stored by password_hash()
-        // 
-    }
-    /*
-     * Obtains a user by its username
-     * @param string $username Account Username
-     */
-    function obtainUserByUsername($username) {
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+        try {
+            $stmt->execute([$username, $email, $password, $role]);
 
+            return $stmt->lastInsertId();
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return null;
+        }
     }
 
     /*
      * Obtains all users by their role
      * @param string $username Account Username
+     * @return array Returns an array of users with the specified role
      */
     function obtainAllUsersByRoleName($roleName) {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE role = ?");
+        try {
+            $stmt->execute([$roleName]);
 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return [];
+        }
     }
 
     /*
      * Obtains all users
+     * @return array Returns an array of all users in the database
      */
     function obtainAllUsers() {
+        $stmt = $pdo->prepare("SELECT * FROM users");
+        try {
+            $stmt->execute();
 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return [];
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -83,11 +83,20 @@
     /*
      * Stores an event
      * @param string $eventName Event Name
-     * @param unknown $eventDate Event Date
+     * @param date $eventDate Event Date
      * @param string $eventCreator Event Creator 
      */
     function storeEvent($eventName, $eventDate, $eventCreator, $eventDescription) {
+        $stmt = $pdo->prepare("INSERT INTO events (name, date, creator, description) VALUES (?, ?, ?, ?)");
+        try {
+            $stmt->execute([$eventName, $eventDate, $eventCreator, $eventDescription]);
 
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return null;
+        }
     }
 
     /*
@@ -95,7 +104,16 @@
      * @param unknown $eventDate Event Date
      */
     function obtainEventByDate($eventDate) {
+        $stmt = $pdo->prepare("SELECT * FROM events WHERE date = ?");
+        try {
+            $stmt->execute([$eventDate]);
 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return [];
+        }
     }
     
     /*
@@ -103,7 +121,16 @@
      * @param int $eventId Event ID
      */
     function obtainEventByID($eventId) {
+        $stmt = $pdo->prepare("SELECT * FROM events WHERE id = ?");
+        try {
+            $stmt->execute([$eventId]);
 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return [];
+        }
     }
     
     /*
@@ -111,13 +138,31 @@
      * @param unknown $eventCreator Event Creators Username or ID
      */
     function obtainEventByCreator($eventCreator) {
+        $stmt = $pdo->prepare("SELECT * FROM events WHERE creator = ?");
+        try {
+            $stmt->execute([$eventCreator]);
 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return [];
+        }
     }
 
     /*
      * Obtains all events 
      */
     function obtainAllEvents() {
+        $stmt = $pdo->prepare("SELECT * FROM events");
+        try {
+            $stmt->execute();
 
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error: " . $e->getMessage());
+
+            return [];
+        }
     }
 ?> 

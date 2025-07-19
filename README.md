@@ -13,7 +13,7 @@ A simple event calendar application, to help learn and understand database funct
 * Add new events with a title, date, and description
 * Administrator role system, to allow specific users to make and edit events
 * Having a calendar, to preview all available events
-* Secure interaction with the MySQL database using MySQLi
+* Secure interaction with the MySQL database using `mysql_pdo`
 
 ## License
 [MIT License](LICENSE)
