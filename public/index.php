@@ -1,6 +1,4 @@
 <?php
-    require_once '_database/connect.php';
-
     $year = date('Y');
     $month = date('n');
     $monthName = date('F');
@@ -21,12 +19,12 @@
 </head>
 <body class="bg-gray-100 font-sans">
     <!-- Header -->
-    <header class="bg-white p-64 shadow-md py-4 flex justify-between items-center">
+    <header class="bg-white p-64 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-6">
-            <h1 class="text-3xl font-bold">Calendar</h1>
+            <h1 class="text-3xl font-bold"><a href="./">Calendar</a></h1>
         </div>
-        <div class="space-x-2">
-            <a class="bg-gray-300 px-4 py-2 rounded shadow" href="./register.php">Register</a>
+        <div class="space-x-2 text-white">
+            <a class="bg-gray-600 px-4 py-2 rounded shadow" href="./register.php">Register</a>
             <a class="bg-blue-500 px-4 py-2 rounded shadow" href="./login.php">Login</a>
         </div>
     </header>
@@ -136,5 +134,3 @@
     </footer>
 </body>
 </html>
-
-<!-- flex w-full max-w-5xl space-x-4 mb-10 bg-white rounded-2xl -->
