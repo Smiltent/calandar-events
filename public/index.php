@@ -116,6 +116,24 @@
             </div>
         </div>
     </main>
+
+    <!-- Announcements Content -->
+    <section class="flex flex-row mt-10 justify-center space-x-10">
+        <div class="p-6 max-w-5xl rounded-2xl">
+            <h1 class="text-2xl font-bold text-center">
+                Announcements
+            </h1>
+            <div>
+                <p class="text-gray-600">Penor</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white p-4 text-center">
+        <p class="text-gray-600">© <?= date('Y'); ?> All rights reserved.</p>
+        <p class="text-gray-600">Proudly made by Smil</p>
+    </footer>
 </body>
 </html>
 
