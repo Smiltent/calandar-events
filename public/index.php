@@ -20,13 +20,20 @@
     <link rel="stylesheet" href="./src/style.css">
 </head>
 <body class="bg-gray-100 font-sans">
-    <header class="bg-white shadow-md py-4">
-        <div class="max-w-7xl mx-auto px-4">
+    <!-- Header -->
+    <header class="bg-white p-64 shadow-md py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-6">
             <h1 class="text-3xl font-bold">Calendar</h1>
         </div>
+        <div class="space-x-2">
+            <a class="bg-gray-300 px-4 py-2 rounded shadow" href="./register.php">Register</a>
+            <a class="bg-blue-500 px-4 py-2 rounded shadow" href="./login.php">Login</a>
+        </div>
     </header>
-    <main class="flex flex-row">
-        <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
+
+    <!-- Main Content -->
+    <main class="flex flex-row mt-10 justify-center space-x-10">
+        <div class="p-6 max-w-5xl bg-white rounded-2xl">
             <h1 class="text-2xl font-bold text-center mb-4">
                 <?= $monthName . ' ' . $year; ?>
             </h1>
@@ -89,7 +96,7 @@
                 ?>
             </div>
         </div>
-        <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl">
+        <div class="p-6 max-w-5xl bg-white rounded-2xl">
             <h1 class="text-2xl font-bold text-center mb-4">
                 Upcoming Events
             </h1>
@@ -111,3 +118,5 @@
     </main>
 </body>
 </html>
+
+<!-- flex w-full max-w-5xl space-x-4 mb-10 bg-white rounded-2xl -->
