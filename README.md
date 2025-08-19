@@ -3,7 +3,6 @@
 
 > [!WARNING]
 > This project is still under development. 
-<img src="https://hackatime-badge.hackclub.com/U095PDJ7LHM/calandar-events"> 
 
 ## What is this project?
 A simple event calendar application, to help learn and understand database functionality in PHP. This project was initially started as a **summer assignment** by one of our teachers.
