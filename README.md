@@ -38,6 +38,7 @@ sudo docker compose up -d
 * Make [Replit](https://replit.com/) support, as I am only supporting Docker
 * Add support for [Turnstile](https://www.cloudflare.com/application-services/products/turnstile/) or [reCaptcha](https://developers.google.com/recaptcha/)
 * Dark mode
+* Modify `.env` to have more support in changing what port each thing uses, and production/development environments
 
 ## License
 [MIT License](LICENSE)
