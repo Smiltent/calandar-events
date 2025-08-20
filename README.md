@@ -14,5 +14,30 @@ A simple event calendar application, to help learn and understand database funct
 * Having a calendar, to preview all available events
 * Secure interaction with the MySQL database using `mysql_pdo`
 
+## How to run?
+### Dependancies
+```bash
+sudo apt-get install docker git docker-compose-plugin
+# if you dont have docker enabled
+sudo systemctl enable docker --now
+```
+### Starting
+*Before you start it, make sure you have changed .env.example to .env & you've changed the values*
+```bash
+# In the folder where the docker-compose.yml is located at
+sudo docker compose up -d
+```
+
+## TODO
+* Having a way to make/modify events as an admin
+* Having a way to make/modify users as an admin
+* Make first account always admin, instead of modifying `.env` to make a new user
+* Show events in the calendar
+* Show the upcoming events in the Upcoming Events section
+* When you click on an event, it will give you send you to `/preview.php?id={id}`, to see the event's description and any other info
+* Make [Replit](https://replit.com/) support, as I am only supporting Docker
+* Add support for [Turnstile](https://www.cloudflare.com/application-services/products/turnstile/) or [reCaptcha](https://developers.google.com/recaptcha/)
+* Dark mode
+
 ## License
 [MIT License](LICENSE)

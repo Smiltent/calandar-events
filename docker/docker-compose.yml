@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_HOST: ${DB_HOST}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      ADMIN_INIT_USER: ${ADMIN_INIT_USER}
+      ADMIN_INIT_PASS: ${ADMIN_INIT_PASS}
+    volumes:
+      - ../public:/var/www/html
+      - ../private:/var/www/private
+    depends_on:
+      - db
+
+  # Disable on Production, except if you are sigma and know what you are doing
+  browsersync:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - ../public:/app
+    command: >
+      sh -c "npm install -g browser-sync &&
+             browser-sync start --proxy 'app:80' --files '/app' --no-ui --no-open --host 0.0.0.0 --port 3000"
+    depends_on:
+      - app
+    ports:
+      - "3000:3000"
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  # Disable on Production, except if you are sigma and know what you are doing
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: myphpmyadmin
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASS}
+      PMA_ARBITRARY: 0
+    ports:
+      - "8081:80"
