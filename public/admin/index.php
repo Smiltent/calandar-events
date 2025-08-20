@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin') {
     header("Location: /login.php");
     exit;
 }
@@ -31,7 +31,15 @@ if (!isset($_SESSION['username'])) {
 
     <!-- Main Content -->
     <main class="flex-grow flex flex-row mt-10 justify-center space-x-10 pb-24">
-
+        <div class="p-8 max-w-5xl bg-white rounded-2xl" style="width: 500px;">
+            <h1 class="text-3xl font-bold">Admin Control Panel</h1>
+            <p class="text-m pb-4">Hello, <?= htmlspecialchars($_SESSION['username']) ?></p>
+            <div class="grid grid-cols-2 gap-2">
+                <a href="/admin/events.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Manage Events</a>
+                <a href="/admin/users.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Manage Users</a>
+                <a href="#" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Party Mode</a>
+            </div>
+        </div>
     </main>
 
     <!-- Footer -->

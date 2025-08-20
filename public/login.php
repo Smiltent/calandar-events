@@ -1,6 +1,11 @@
 <?php
     session_start();
-    require '_database/connect.php';
+    require __DIR__ . '/../private/db/connect.php';
+
+    if (isset($_SESSION['username'])) {
+        header("Location: /index.php");
+        exit;
+    }
 
     $unknown = false;
     
@@ -50,8 +55,18 @@
             <h1 class="text-3xl font-bold"><a href="/">Calendar</a></h1>
         </div>
         <div class="space-x-2 text-white">
-            <a class="bg-gray-600 px-4 py-2 rounded shadow" href="/register.php">Register</a>
-            <a class="bg-blue-500 px-4 py-2 rounded shadow" href="/login.php">Login</a>
+            <a class="text-black px-2" href="#">Table View</a>
+            <?php
+                if (!isset($_SESSION['username'])) {
+                    echo '<a class="bg-gray-600 px-4 py-2 rounded shadow" href="/register.php">Register</a>';
+                    echo '<a class="bg-blue-500 px-4 py-2 rounded shadow" href="/login.php">Login</a>';
+                } else {
+                    if ($_SESSION['role'] === 'admin') {
+                        echo '<a class="bg-gray-600 px-4 py-2 rounded shadow" href="/admin/index.php">Admin</a>';
+                    }
+                    echo '<a class="bg-blue-500 px-4 py-2 rounded shadow" href="/logout.php">Logout</a>';
+                }
+            ?>
         </div>
     </header>
 
