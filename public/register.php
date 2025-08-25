@@ -47,7 +47,6 @@
             <h1 class="text-3xl font-bold"><a href="/">Calendar</a></h1>
         </div>
         <div class="space-x-2 text-white">
-            <a class="text-black px-2" href="#">Table View</a>
             <?php
                 if (!isset($_SESSION['username'])) {
                     echo '<a class="bg-gray-600 px-4 py-2 rounded shadow" href="/register.php">Register</a>';

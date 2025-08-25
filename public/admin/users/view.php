@@ -1,9 +1,13 @@
 <?php
     session_start();
+    require __DIR__ . '/../../../private/db/connect.php';
+
     if (!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin') {
         header("Location: /login.php");
         exit;
     }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Create an event</title>
 
     <!-- CSS -->
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
@@ -31,13 +35,11 @@
 
     <!-- Main Content -->
     <main class="flex-grow flex flex-row mt-10 justify-center space-x-10 pb-24">
-        <div class="p-8 max-w-5xl bg-white rounded-2xl" style="width: 500px;">
-            <h1 class="text-3xl font-bold">Events</h1>
-            <p class="text-m pb-4">Manage all the Events on the Calendar</p>
-            <div class="grid grid-cols-1 gap-4">
-                <a href="/admin/events/create.php" class="bg-green-600 text-white px-4 py-2 rounded shadow">Create New Event</a>
-                <a href="/admin/events/list.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">View All Events</a>
-            </div>
+        <div class="p-8 max-w-5xl bg-white rounded-2xl" style="width: 600px;">
+            <h1 class="text-3xl font-bold">List</h1>
+            <p class="text-m pb-4">All the events listed</p>
+            
+            
         </div>
     </main>
 

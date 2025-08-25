@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin') {
-    header("Location: /login.php");
-    exit;
-}
+    session_start();
+    if (!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin') {
+        header("Location: /login.php");
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ if (!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin') {
     <!-- Header -->
     <header class="bg-white p-64 py-4 flex justify-between items-center">
         <div class="flex items-center space-x-6">
-            <h1 class="text-3xl font-bold"><a href="/">Calendar</a></h1>
+            <h1 class="text-3xl font-bold"><a href="/admin/index.php">Calendar | Admin</a></h1>
         </div>
         <div class="space-x-2 text-white">
             <a class="bg-gray-600 px-4 py-2 rounded shadow" href="/index.php">Main</a>

@@ -1,7 +1,7 @@
 <?php
-    // ============
-    //   Database
-    // ============
+    // =================
+    //   Database Init
+    // =================
     $host = getenv('MYSQL_HOST');
     $dbname = getenv('MYSQL_DATABASE');
     $user = getenv('MYSQL_USER');
@@ -13,25 +13,10 @@
     } catch(PDOException $e) {
         die("Database connection failed: " . $e->getMessage());
     }
-
-    // =============================
-    //   Admin User Initialization
-    // =============================
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
-    $stmt->execute([getenv('ADMIN_INIT_USER')]);
-
-    if ($stmt->fetchColumn() == 0) {
-        $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, 'admin')");
-        try {
-            $stmt->execute([getenv('ADMIN_INIT_USER'), getenv('ADMIN_INIT_PASS')]);
-        } catch (PDOException $e) {
-            error_log("Error: " . $e->getMessage());
-        }
-    }
-
-    // ==================================
-    //   Users Database Initialization
-    // ==================================
+    
+    // ===============
+    //   USERS TABLE
+    // ===============
     try {
         $pdo->exec("
             CREATE TABLE IF NOT EXISTS users (
@@ -46,9 +31,9 @@
         error_log("Error creating users table: " . $e->getMessage());
     }
 
-    // ==================================
-    //   Events Database Initialization
-    // ==================================
+    // ================
+    //   EVENTS TABLE
+    // ================
     try {
         $pdo->exec("
             CREATE TABLE IF NOT EXISTS events (
@@ -63,4 +48,24 @@
     } catch (PDOException $e) {
         error_log("Error creating events table: " . $e->getMessage());
     }
+
+    // =============================================================
+    //   INTERESTED IN EVENTS TABLE
+    //   Stole this off the interwebs, don't ask me how this works
+    // =============================================================
+    try {
+        $pdo->exec("
+            CREATE TABLE IF NOT EXISTS event_int (
+                event_id INT,
+                user_id INT,
+                PRIMARY KEY (event_id, user_id),
+                FOREIGN KEY (event_id) REFERENCES events(event_id),
+                FOREIGN KEY (user_id) REFERENCES users(user_id)
+            )
+        ");
+    } catch (PDOException $e) {
+        error_log("Error creating events table: " . $e->getMessage());
+    }
+
+
 ?>
