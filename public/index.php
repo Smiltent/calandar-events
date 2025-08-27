@@ -1,4 +1,5 @@
 <?php
+    require_once __DIR__ . '/../private/db/connect.php';
     session_start();
 
     $year = date('Y');
@@ -6,6 +7,15 @@
     $monthName = date('F');
 
     $todaysDay = date('j');
+
+    $maxLength = 16;
+
+    function shortenText($text) {
+        if (mb_strlen($text) > 16) {
+            return mb_substr($text, 0, 16 - 3) . '...';
+        }
+        return $text;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +52,7 @@
 
     <!-- Main Content -->
     <main class="flex-grow flex flex-row mt-10 justify-center space-x-10 pb-24">
-        <div class="p-6 max-w-5xl bg-white rounded-2xl">
+        <div class="p-6 max-w-5xl bg-white rounded-2xl" style="width:340px;">
             <h1 class="text-2xl font-bold text-center mb-4">
                 <?= $monthName . ' ' . $year; ?>
             </h1>
@@ -105,21 +115,26 @@
                 ?>
             </div>
         </div>
-        <div class="p-6 max-w-5xl bg-white rounded-2xl">
+        <div class="p-6 max-w-5xl bg-white rounded-2xl" style="width:340px;">
             <h1 class="text-2xl font-bold text-center mb-4">
                 Upcoming Events
             </h1>
-            <div>
-                <?php 
-                    $balls = false;
-                
-                    if ($balls) {
-                        echo '<ul class="list-disc pl-5">';
-                        echo '<li>Event 1: ' . date('Y-m-d', strtotime('+1 week')) . '</li>';
-                        echo '<li>Event 2: ' . date('Y-m-d', strtotime('+2 weeks')) . '</li>';
-                        echo '</ul>';
+            <div class="text-center" style="max-height: 185px; overflow-y: auto;">
+                <?php
+                    $now = date('Y-m-d H:i:s');
+                    $stmt = $pdo->prepare("SELECT title, start_time FROM events WHERE YEAR(start_time) = ? AND MONTH(start_time) = ? AND start_time >= ? ORDER BY start_time ASC");
+                    $stmt->execute([$year, $month, $now]);
+                    $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    if (count($events) > 0) {
+                        foreach ($events as $event) {
+                            echo "<div class=\"flex text-white bg-blue-500 p-2 px-4 rounded-2xl justify-between mb-2\">";
+                            echo "<p class=\"text-left\">" . htmlspecialchars(shortenText($event['title'])) . "</p>";
+                            echo "<p class=\"text-right\">" . date('jS F', strtotime($event['start_time'])) . "</p>";
+                            echo "</div>";
+                        }
                     } else {
-                        echo '<p class="text-gray-600">No events scheduled for this month.</p>';
+                        echo "<p class=\"text-gray-600\">No events scheduled for this month.</p>";
                     }
                 ?>
             </div>

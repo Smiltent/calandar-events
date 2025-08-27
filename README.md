@@ -29,11 +29,9 @@ sudo docker compose up -d
 ```
 
 ## TODO
-* Having a way to make/modify events as an admin
-* Having a way to make/modify users as an admin
 * Make first account always admin, instead of modifying `.env` to make a new user
 * Show events in the calendar
-* Show the upcoming events in the Upcoming Events section
+* ~~Show the upcoming events in the Upcoming Events section~~
 * When you click on an event, it will give you send you to `/preview.php?id={id}`, to see the event's description and any other info
 * Make [Replit](https://replit.com/) support, as I am only supporting Docker
 * Add support for [Turnstile](https://www.cloudflare.com/application-services/products/turnstile/) or [reCaptcha](https://developers.google.com/recaptcha/)

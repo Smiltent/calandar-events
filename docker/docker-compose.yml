@@ -8,8 +8,6 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
-      ADMIN_INIT_USER: ${ADMIN_INIT_USER}
-      ADMIN_INIT_PASS: ${ADMIN_INIT_PASS}
     volumes:
       - ../public:/var/www/html
       - ../private:/var/www/private

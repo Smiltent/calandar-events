@@ -35,9 +35,8 @@
             <h1 class="text-3xl font-bold">Admin Control Panel</h1>
             <p class="text-m pb-4">Hello, <?= htmlspecialchars($_SESSION['username']) ?></p>
             <div class="grid grid-cols-2 gap-2">
-                <a href="/admin/events.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Manage Events</a>
-                <a href="/admin/users.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Manage Users</a>
-                <a href="#" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Party Mode</a>
+                <a href="/admin/events.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Create an Event</a>
+                <a href="/admin/users.php" class="bg-gray-600 text-white px-4 py-2 rounded shadow">Create an Admin User</a>
             </div>
         </div>
     </main>
