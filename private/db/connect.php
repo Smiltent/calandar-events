@@ -40,8 +40,8 @@
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 title VARCHAR(255) NOT NULL,
                 description TEXT NOT NULL,
-                location VARCHAR(255) NOT NULL
-                time DATETIME NOT NULL,
+                location VARCHAR(255) NOT NULL,
+                time DATETIME NOT NULL
             )
         ");
     } catch (PDOException $e) {
@@ -57,14 +57,13 @@
             CREATE TABLE IF NOT EXISTS event_int (
                 event_id INT,
                 user_id INT,
+                rating TEXT,
                 PRIMARY KEY (event_id, user_id),
-                FOREIGN KEY (event_id) REFERENCES events(event_id),
-                FOREIGN KEY (user_id) REFERENCES users(user_id)
+                FOREIGN KEY (event_id) REFERENCES events(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
             )
         ");
     } catch (PDOException $e) {
         error_log("Error creating events table: " . $e->getMessage());
     }
-
-
 ?>

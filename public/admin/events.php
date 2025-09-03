@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require __DIR__ . '/../../../private/db/connect.php';
+    require __DIR__ . '/../../private/db/connect.php';
 
     if (!isset($_SESSION['username']) && $_SESSION['role'] !== 'admin') {
         header("Location: /login.php");
@@ -14,14 +14,13 @@
         $title = $_POST['title'];
         $description = $_POST['description'];
         $location = $_POST['location'];
-        $date = $_POST['date'];
-        $time = $_POST['time'];
+        $datetime = $_POST['datetime'];
 
-        $start_time = date('Y-m-d H:i:s', strtotime($date . ' ' . $time));
+        //$start_time = date('Y-m-d H:i:s', strtotime($date . ' ' . $time));
 
         $stmt = $pdo->prepare("INSERT INTO events (title, description, location, time) VALUES (?, ?, ?, ?)");
         try {
-            $stmt->execute([$title, $description, $location, $start_time]);
+            $stmt->execute([$title, $description, $location, $datetime]);
             header("Location: /admin/events.php");
             exit;
         } catch (PDOException $e) {
@@ -59,10 +58,14 @@
             <h1 class="text-3xl font-bold">Create</h1>
             <p class="text-m pb-4">Create an event with specific details</p>
             <form action="#" method="post" class="space-y-5">
-                <div>
+                <div class="flex space-x-5 w-full">
                     <input type="text" name="title" id="title" required 
                         class="rounded-md block w-full px-3 py-2 border border-gray-400 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Title">
+
+                    <input type="text" name="location" id="location" required 
+                        class="rounded-md block w-full px-3 py-2 border border-gray-400 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Location">
                 </div>
                 <div>
                     <textarea name="description" id="description"
@@ -70,20 +73,10 @@
                         placeholder="Description" rows="3"></textarea>
                 </div>
                 <div>
-                    <div class="flex space-x-5 w-full">
-                        <div>
-                            <p class="">Start time</p>
-                            <input type="datetime-local" name="start_time" id="start_time" required 
-                                class="rounded-md block w-full px-3 py-2 border border-gray-400 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                min="<?= date('Y-m-d\TH:i') ?>">
-                        </div>
-                        <div>
-                            <p>End time (optional)</p>
-                            <input type="datetime-local" name="end_time" id="end_time" 
-                                class="rounded-md block w-full px-3 py-2 border border-gray-400 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                                min="<?= date('Y-m-d\TH:i') ?>">
-                        </div>
-                    </div>
+                    <p class="">Date & Time</p>
+                    <input type="datetime-local" name="datetime" id="datetime" required 
+                        class="rounded-md block w-full px-3 py-2 border border-gray-400 text-black focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        min="<?= date('Y-m-d\TH:i') ?>">
                 </div>
                 <div>
                     <input type="submit" value="Create Event"

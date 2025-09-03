@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
     environment:
       MYSQL_HOST: ${DB_HOST}
       MYSQL_DATABASE: ${DB_NAME}
@@ -17,6 +18,7 @@ services:
   # Disable on Production, except if you are sigma and know what you are doing
   browsersync:
     image: node:18
+    restart: always
     working_dir: /app
     volumes:
       - ../public:/app
@@ -44,7 +46,6 @@ services:
   # Disable on Production, except if you are sigma and know what you are doing
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: myphpmyadmin
     restart: always
     depends_on:
       - db

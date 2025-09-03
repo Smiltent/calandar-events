@@ -121,20 +121,25 @@
             </h1>
             <div class="text-center" style="max-height: 185px; overflow-y: auto;">
                 <?php
-                    $now = date('Y-m-d H:i:s');
-                    $stmt = $pdo->prepare("SELECT title, start_time FROM events WHERE YEAR(start_time) = ? AND MONTH(start_time) = ? AND start_time >= ? ORDER BY start_time ASC");
-                    $stmt->execute([$year, $month, $now]);
+                    $stmt = $pdo->prepare("SELECT title, time FROM events ORDER BY time ASC");
+                    $stmt->execute();
                     $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     if (count($events) > 0) {
                         foreach ($events as $event) {
+                            $eventTime = strtotime($event['time']);
+                            $eventYear = date('Y', $eventTime);
+                            $displayDate = date('jS F', $eventTime);
+                            if ($eventYear > $year) {
+                                $displayDate .= ' ' . $eventYear;
+                            }
                             echo "<div class=\"flex text-white bg-blue-500 p-2 px-4 rounded-2xl justify-between mb-2\">";
                             echo "<p class=\"text-left\">" . htmlspecialchars(shortenText($event['title'])) . "</p>";
-                            echo "<p class=\"text-right\">" . date('jS F', strtotime($event['start_time'])) . "</p>";
+                            echo "<p class=\"text-right\">" . $displayDate . "</p>";
                             echo "</div>";
                         }
                     } else {
-                        echo "<p class=\"text-gray-600\">No events scheduled for this month.</p>";
+                        echo "<p class=\"text-gray-600\">No events scheduled.</p>";
                     }
                 ?>
             </div>
